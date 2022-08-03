@@ -23,11 +23,13 @@ search.click()
 search.send_keys("coding")
 search.send_keys(Keys.RETURN)
 try:
-    metadata = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "ytd-video-meta-block"))
+    title = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, 'video-title'))
     )
 except:
     driver, quit()
+title = driver.find_element(By.ID, 'video-title')
 metadata = driver.find_elements(By.CLASS_NAME, "ytd-video-meta-block")
+print(title.text)
 for i in range(3):
     print(metadata[i].text)
