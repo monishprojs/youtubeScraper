@@ -20,5 +20,14 @@ except:
     driver.quit()
 search = driver.find_element(By.NAME, "search_query")
 search.click()
-time.sleep(5)
 search.send_keys("coding")
+search.send_keys(Keys.RETURN)
+try:
+    metadata = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "ytd-video-meta-block"))
+    )
+except:
+    driver, quit()
+metadata = driver.find_elements(By.CLASS_NAME, "ytd-video-meta-block")
+for i in range(3):
+    print(metadata[i].text)
