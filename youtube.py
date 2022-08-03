@@ -12,12 +12,19 @@ driver = webdriver.Chrome(PATH)
 driver.get("https://youtube.com")
 driver.maximize_window()
 try:
-    title = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, 'video-title'))
+    hrefContainer = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "video-title-link"))
     )
 except:
     driver.quit()
-title = driver.find_element(By.ID, 'video-title')
-title.click()
-meta = driver.find_elements(By.CLASS_NAME, "yt-formatted-string")
-print(meta[0])
+hrefContainer = driver.find_element(By.ID, "video-title-link")
+href = hrefContainer.get_attribute("href")
+driver.get(href)
+try:
+    viewCount = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "view-count"))
+    )
+except:
+    driver.quit()
+viewCount = driver.find_element(By.CLASS_NAME, "view-count")
+print(viewCount.text)
